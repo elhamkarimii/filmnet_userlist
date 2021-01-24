@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
-import { StateContext } from "../Context";
+import { StateContext } from "../../Context";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import { SnackbarProvider, VariantType, useSnackbar } from "notistack";
-import Validation from "../Validation";
+import Validation from "../../Validation";
+import {useStyles} from "./style"
+import useData from "../../useData";
+
 interface TargetType {
   val: string;
   name: string;
@@ -20,62 +22,11 @@ interface NewUserType {
   id: number;
 }
 
-
 interface UserFormType {
-  handleSaveUser: () => void;
+  handleSaveUser: (mode: string) => void;
   handleInputChange: (target: TargetType) => void;
   handleBackButton: () => void;
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    cotainer: {
-      width: "100vw",
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#D3D3D3",
-    },
-    root: {
-      flexGrow: 1,
-      maxWidth: "50%",
-      display: "flex ",
-      justifyContent: "center ",
-      alignItems: "center ",
-      backgroundColor: "#F2F2F2",
-      borderRadius: "7px",
-      boxShadow: "2px 2px 15px #555555",
-    },
-    paper: {
-      padding: "10px",
-      textAlign: "center",
-      color: theme.palette.text.secondary,
-      flexBasis: "none",
-      display: "flex",
-      justifyContent: "center",
-      marginTop: "10px",
-    },
-    row: {
-      display: "flex",
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    box: {
-      display: "flex",
-      width: "100px",
-      alignItems: "center",
-    },
-    textField: {
-      marginTop: "25px",
-    },
-    buttons: {
-      padding: "10px 40px",
-      margin: "40px 10px",
-    },
-  })
-);
 
 function UserForm({
   handleSaveUser,
@@ -88,14 +39,18 @@ function UserForm({
     email: "",
     firstValidation: true,
   });
+
   const value: NewUserType = useContext(StateContext);
   const { first_name, last_name, email } = value;
+  console.log(value,'value')
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+
   const handleClickVariant = (variant: VariantType) => () => {
     enqueueSnackbar(" successful saved!", { variant });
-    handleSaveUser();
+    handleSaveUser('edit');
   };
+
   const handleOnChange = (e: any) => {
     Validation({
       name: e.target.name,
@@ -107,6 +62,7 @@ function UserForm({
       val: e.target.value,
     });
   };
+
   const checkDisable = () => {
     if (valid.firstValidation) {
       return true;
@@ -122,6 +78,8 @@ function UserForm({
       }
     }
   };
+
+  
 
   return (
     <div className={classes.cotainer}>
@@ -204,17 +162,34 @@ function UserForm({
     </div>
   );
 }
-export default function IntegrationNotistack({
-  handleSaveUser,
-  handleInputChange,
-  handleBackButton,
-}: UserFormType) {
+export default function IntegrationNotistack(props:UserFormType) { 
+
+  // const { dispatch } = useData();
+  // function handleSaveUser(mode: string) {
+  //   dispatch({
+  //     type: "HANDLE_SAVE_USER",
+  //     payload: mode,
+  //   });
+  // }
+  // function handleInputChange({ name, val }: TargetType) {
+  //   dispatch({
+  //     type: "HANDLE_USER_INPUT",
+  //     payload: {
+  //       name: name,
+  //       val: val,
+  //     }, 
+  //   });
+  // }
+  // function handleBackButton() {
+  //   dispatch({
+  //     type: "HANDLE_BACK_BUTTON",
+  //   });
+  // }
+  
   return (
-    <SnackbarProvider maxSnack={2}>
+    <SnackbarProvider maxSnack={2} >
       <UserForm
-        handleSaveUser={handleSaveUser}
-        handleInputChange={handleInputChange}
-        handleBackButton={handleBackButton}
+      {...props}
       />
     </SnackbarProvider>
   );

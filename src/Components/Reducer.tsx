@@ -115,6 +115,7 @@ function handleUserInput(state: StateType, action: ActionType) {
 }
 
 function handleEditUser(state: StateType, action: ActionType) {
+  console.log(action.payload,'payload')
   return {
     ...state,
     value: {

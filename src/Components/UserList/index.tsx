@@ -1,6 +1,5 @@
 import React from "react";
-import UserInfo from "./UserInfo";
-import { makeStyles } from "@material-ui/core/styles";
+import UserInfo from "../UserInfo/index";
 import {
   Table,
   TableBody,
@@ -9,23 +8,8 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
-const useStyles = makeStyles({
-  container:{
-width:'100%',
-display:'flex',
-justifyContent:'center',
-border:'none'
-  },
-  table: {
-    minWidth: 650,
-    maxWidth:'90%',
-    border:'1px solid #C5C5C5 ',
-    borderRadius:'7px'
-  },
-  tableHead:{
-    backgroundColor:'#C5C5C5'
-  }
-});
+import {useStyles} from "./style"
+
 
 interface Info {
   id: number;

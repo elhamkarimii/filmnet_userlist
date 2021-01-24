@@ -1,14 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    errorBox: {
-      marginLeft: "70px",
-    },
-  })
-);
+import {useStyles} from "./style"
 
 export default function UserNotFound() {
   const classes = useStyles();

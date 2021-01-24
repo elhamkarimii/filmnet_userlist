@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TableCell } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import {useStyles} from "./style"
 
 interface Info {
   id: number;
@@ -18,13 +18,6 @@ interface InfoType {
   handleEditUser: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    optionBtn: {
-      margin:'2.5px',
-    },
-  })
-);
 export default function UserInfo({
   info,
   handleDeleteUser,
